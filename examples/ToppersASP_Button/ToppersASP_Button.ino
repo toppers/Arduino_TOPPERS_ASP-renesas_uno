@@ -68,7 +68,6 @@ int loop_count;
 
 // the loop function runs over and over again forever
 void loop() {
-  slp_tsk();
   SerialUSB.print("loop: ");
   SerialUSB.println(loop_count++);
   digitalWrite(LED_BUILTIN, HIGH);  // turn the LED on (HIGH is the voltage level)
