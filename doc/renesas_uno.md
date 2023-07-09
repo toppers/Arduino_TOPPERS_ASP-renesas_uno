@@ -1,12 +1,29 @@
-# Wio Terminalに関する情報
+# Arduino UNO R4に関する情報
 
-## ブートローダ
+## デバイス
+- SoC : RA4M1(R7FA4M1AB3CFM)
+- Arduinoで使用しているタイマー
+  - AGT
+- Serial1として使用しているモジュール
+  - SCI2
+- 割込みの仕組み
+  - 特定のベクターに割り付けられているではなく，
+  - 割込みコントローラに登録することにより任意のベクタに配置可能 
+  - Arduinoライブラリでは割込みを登録した順に登録する．
+- 割込み本数
+  - Cortex-Mの割り込み
+    - 16個
+  - デバイスの割込み
+    - 48個
 
-[ここから](https://github.com/Seeed-Studio/uf2-samdx1)ダウロードしてビルドする．
+## Arduino core 付属のライブラリ(libfsp.a)について
+
+- ソースコードは付属しておらずlibfsp.aをリンクする．
+- ソースコードは以下にある
+  - https://github.com/arduino/ArduinoCore-renesas
 
 ## Arduinoのライブラリ仕様
 [オフィシャルドキュメント](https://arduino.github.io/arduino-cli/library-specification/)
-
 
 ### フォルダ
 - ./src
@@ -26,11 +43,3 @@
 - -lはつけなくても勝手にしてくれる．
 - インクルードファイルの挙動
   - ユーザー側のファイルはインクルードできない．
-
-### Serialについて
-- sercom1 : RTL8720D に接続 : Serial2
-- sercom2 : 裏のラズパイ互換コネクタに接続 : Serial1
-- sercom3 : grove 左
-- sercom4 : grove 右
-
-[sercom3/sercom4 の使い方例](https://gist.github.com/ciniml/bd2bb4dea22a55c067ca6790ad0c3eae)

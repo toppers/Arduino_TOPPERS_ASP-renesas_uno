@@ -4,32 +4,27 @@
 /*
  *  オブジェクトのID
  */
-#define LOGTASK			1 /* 変更した場合はライブラリを作り直し */
-#define TINYUSBTASK		2
-#define IDLE_TASK		3
-#define TASK1			4
-#define TASK2			5
-#define TASK3			6
-#define TASK4			7
-#define TASK5			8
-#define TASK6			9
-#define TASK7			10
-#define TASK8			11
-#define TASK9			12
-#define TASK10			13
+#define IDLE_TASK		1
+#define TASK1			2
+#define TASK2			3
+#define TASK3			4
+#define TASK4			5
+#define TASK5			6
+#define TASK6			7
+#define TASK7			8
+#define TASK8			9
+#define TASK9			10
 
-#define SERIAL_RCV_SEM1	1 /* 変更した場合はライブラリを作り直し */
-#define SERIAL_SND_SEM1	2 /* 変更した場合はライブラリを作り直し */
-#define SEM1			3
-#define SEM2			4
-#define SEM3			5
-#define SEM4			6
-#define SEM5			7
-#define SEM6			8
-#define SEM7			9
-#define SEM8			10
-#define SEM9			11
-#define SEM10			12
+#define SEM1			1
+#define SEM2			2
+#define SEM3			3
+#define SEM4			4
+#define SEM5			5
+#define SEM6			6
+#define SEM7			7
+#define SEM8			8
+#define SEM9			9
+#define SEM10			10
 
 #define FLG1			1
 #define FLG2			2

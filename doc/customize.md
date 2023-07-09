@@ -10,7 +10,7 @@ KMM_SIZEの値を変更することで，タスクスタック等のカーネル
 /*
  *  カーネルが割り付けるメモリ領域のサイズ
  */
-#define	KMM_SIZE	(1024 * 32)
+#define	KMM_SIZE	(1024 * 10)
 ```
 
 ## オブジェクト数(kernel_cfg.h/kernel_id.h)
@@ -21,8 +21,8 @@ kernel_cfg.h の以下の定義を変更すことで，カーネルオブジェ�
 /*
  *  各カーネルオブジェクトの最大登録数
  */
-#define TNUM_TSKID	14		/* タスクの数 */
-#define TNUM_SEMID	12		/* セマフォの数 */
+#define TNUM_TSKID	10		/* タスクの数 */
+#define TNUM_SEMID	10		/* セマフォの数 */
 #define TNUM_FLGID	10		/* イベントフラグ */
 #define TNUM_DTQID	10		/* データキュー */
 #define TNUM_PDQID	10		/* 優先度データキュー */
@@ -39,19 +39,16 @@ kernel_id.h に追加した分のオブジェクトのIDを定義する．
 /*
  *  オブジェクトのID
  */
-#define LOGTASK			1 /* 変更した場合はライブラリを作り直し */
-#define TINYUSBTASK		2
-#define IDLE_TASK		3
-#define TASK1			4
-#define TASK2			5
-#define TASK3			6
-#define TASK4			7
-#define TASK5			8
-#define TASK6			9
-#define TASK7			10
-#define TASK8			11
-#define TASK9			12
-#define TASK10			13
+#define LOGTASK			1
+#define TASK1			2
+#define TASK2			3
+#define TASK3			4
+#define TASK4			5
+#define TASK5			6
+#define TASK6			7
+#define TASK7			8
+#define TASK8			9
+#define TASK9			10
 ```
 
 ## 使用するカーネルサービスの変更(ToppersASP.cpp)
@@ -66,10 +63,6 @@ inirtn(void)
 	 *  各モジュールの初期化
 	 */
 	target_timer_initialize(0);
-	syslog_initialize(0);
-	print_banner(0);
-	serial_initialize(0);
-	logtask_initialize(0);
 
 ....
 

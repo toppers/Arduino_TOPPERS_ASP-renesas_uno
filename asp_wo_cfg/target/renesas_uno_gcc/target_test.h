@@ -39,7 +39,7 @@
  */
 
 /*
- *		テストプログラムのチップ依存定義（SAMD51用）
+ *		テストプログラムのチップ依存定義（RENESAS_UNO用）
  */
 
 #ifndef TOPPERS_TARGET_TEST_H

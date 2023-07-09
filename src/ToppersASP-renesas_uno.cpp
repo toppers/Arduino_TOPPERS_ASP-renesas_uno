@@ -2,7 +2,9 @@
 #include "Arduino.h"
 #endif /* ARDUINO */
 
-#include "ToppersASP.h"
+#define TOPPERS_OMIT_SYSLOG
+
+#include "ToppersASP-renesas_uno.h"
 
 /*
  *  ユーザー記述の初期化関数
@@ -27,10 +29,6 @@ void inirtn(void);
 extern void target_prepare(void);
 
 extern void target_timer_initialize(intptr_t exinf);
-extern void	print_banner(intptr_t exinf) throw();
-extern void	logtask_initialize(intptr_t exinf) throw();
-
-extern void	logtask_terminate(intptr_t exinf) throw();
 extern void	target_timer_terminate(intptr_t exinf) throw();
 
 #define kerflg _kernel_kerflg
@@ -81,23 +79,6 @@ preini_ker(void)
 	initialize_object();
 }
 
-void *kernel_init __attribute__((section(".preinit_array"))) = (void *)&preini_ker;
-
-void
-_initVariant(void)
-{
-#if 0
-	/* SEMCOM2初期化 */
-	Serial1.begin(115200);
-	Serial1.println("TOPPERS/ASP for Arduino");
-#endif
-
-	/*
-	 *  初期化ルーチンの実行
-	 */ 
-	inirtn();
-}
-
 /*
  *  カーネルのスタート関数
  */
@@ -107,8 +88,15 @@ StartToppersASP(void)
 	/* 割込みロック状態へ */
 	Asm("cpsid f");
 
+	/*
+	 *  カーネルの初期化
+	 */
 	preini_ker();
-	_initVariant();
+
+	/*
+	 *  初期化ルーチンの実行
+	 */ 
+	inirtn();
 
 	/*
 	 *  割込み/CPU例外の初期化処理（ターゲット依存）
@@ -145,10 +133,6 @@ user_terrtn() {
 extern "C" {
 #endif
 
-#ifdef USE_TINYUSB
-static void init_tinyusb(void);
-#endif /* USE_TINYUSB */
-
 #ifdef ENABLE_IDLELOOP
 void init_idleloop(void);
 #endif /* ENABLE_IDLELOOP */
@@ -160,20 +144,11 @@ inirtn(void)
 	 *  各モジュールの初期化
 	 */
 	target_timer_initialize(0);
-	syslog_initialize(0);
-	serial_initialize(0);
-	print_banner(0);
-	logtask_initialize(0);
-
 
 	/*
 	 *  ユーザー記述の初期化関数の呼び出し
 	 */
 	user_inirtn();
-
-#ifdef USE_TINYUSB
-	init_tinyusb();
-#endif /* USE_TINYUSB */
 
 #ifdef ENABLE_IDLELOOP
 	init_idleloop();
@@ -189,8 +164,6 @@ terrtn(void)
 	/*
 	 *  終了処理ルーチン
 	 */
-	logtask_terminate(0);
-	serial_terminate(0);
 	target_timer_terminate(0);
 
 	/*
@@ -257,34 +230,6 @@ yield(void)
 {
 	dly_tsk(0);
 }
-
-#ifdef USE_TINYUSB
-
-void
-tinyusb_task_backgroud(void *arg)
-{
-	while (1) {
-		tud_task();
-		tud_cdc_write_flush();
-		delay(10);
-	}
-}
-
-static void
-init_tinyusb(void) {
-	T_CTSK	ctsk;
-	ER		ercd;
-
-	ctsk.tskatr = TA_NULL;
-	ctsk.exinf = 1;
-	ctsk.task = tinyusb_task_backgroud;
-	ctsk.itskpri = 1;
-	ctsk.stksz = 512;
-	ctsk.stk = NULL;
-	ercd = cre_tsk(TINYUSB_TASK, &ctsk);
-	assert(ercd == E_OK);
-}
-#endif /* USE_TINYUSB */
 
 /*
  *  ベクターテーブルのリセットエントリ用のダミー

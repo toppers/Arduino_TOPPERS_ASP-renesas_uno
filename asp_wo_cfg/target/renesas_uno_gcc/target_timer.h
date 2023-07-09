@@ -39,13 +39,13 @@
  */
 
 /*
- *  タイマドライバ（SAMD51用）
+ *  タイマドライバ（RENESAS_UNO用）
  */
 
 #ifndef TOPPERS_TARGET_TIMER_H
 #define TOPPERS_TARGET_TIMER_H
 
-#include "samd51.h"
+#include "renesas_uno.h"
 
 /*
  *  タイマ値の内部表現とミリ秒単位との変換

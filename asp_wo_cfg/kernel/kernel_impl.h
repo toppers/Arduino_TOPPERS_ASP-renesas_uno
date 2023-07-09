@@ -95,11 +95,7 @@
 #ifndef ARDUINO_PASS
 #include "target_config.h"
 #else /* ARDUINO_PASS */
-#ifdef ARDUINO_SEEED_XIAO_M0
-#include <../asp_wo_cfg/target/samd21_gcc/target_config.h>
-#else /* ARDUINO_SEEED_XIAO_M0 */
-#include "../asp_wo_cfg/target/samd51_gcc/target_config.h"
-#endif /* ARDUINO_SEEED_XIAO_M0 */
+#include "../asp_wo_cfg/target/renesas_uno_gcc/target_config.h"
 #endif /* ARDUINO_PASS */
 
 /*

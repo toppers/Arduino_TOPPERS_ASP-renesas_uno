@@ -38,8 +38,8 @@
  *  @(#) $Id: sercom.h 2693 2015-11-04 03:55:57Z ertl-honda $
  */
 
-#ifndef TOPPERS_SAMD51_H
-#define TOPPERS_SAMD51_H
+#ifndef TOPPERS_RENESAS_UNO_H
+#define TOPPERS_RENESAS_UNO_H
 
 #ifndef ARDUINO_PASS
 #include <sil.h>
@@ -47,13 +47,12 @@
 #include <../asp_wo_cfg/include/sil.h>
 #endif /* ARDUINO_PASS */
 
-#define CORE_CLOCK_HZ		120000000U
-#define SERCOM_CLOCK_HZ		16000000
+#define CORE_CLOCK_HZ		48000000U
                       
 /*
  *  割込み番号の最大値
  */
-#define TMAX_INTNO   (16 + 138)
+#define TMAX_INTNO   (16 + 48)
 
 /*
  *  プロセッサタイプ
@@ -73,4 +72,4 @@
  */
 #define __TARGET_ARCH_THUMB		4
 
-#endif /* TOPPERS_SAMD51_H */
+#endif /* TOPPERS_RENESAS_UNO_H */

@@ -3,13 +3,13 @@
 # 
 
 #
-#		Makefile のターゲット依存部（SAMD51用）
+#		Makefile のターゲット依存部（RENESAS_UNO用）
 #
 
 #
 #  ボード名，プロセッサ名，開発環境名の定義
 #
-BOARD = samd51
+BOARD = renesas_uno
 PRC = arm_m
 TOOL = gcc
 
@@ -58,7 +58,7 @@ KERNEL_DIR := $(KERNEL_DIR) $(TARGETDIR) \
 
 KERNEL_ASMOBJS := $(KERNEL_ASMOBJS)
 KERNEL_COBJS := $(KERNEL_COBJS) target_config.o core_timer.o \
-                plib_clock.o target_vector.o
+                target_vector.o
                 
 #
 #  システムサービスに関する定義

@@ -39,16 +39,13 @@
  */
 
 /*
- * チップ依存モジュール（SAMD51用）
+ * チップ依存モジュール（RENESAS_UNO用）
  */
 #include "kernel_impl.h"
 #include <sil.h>
-#include "target_serial.h"
+//#include "target_serial.h"
 
-#include "plib_clock.h"
-
-volatile int poi;
-extern const FP vector_table[];
+//#include "plib_clock.h"
 
 /*
  *  start.Sから呼び出されるハードウェアの初期化処理
@@ -83,46 +80,12 @@ software_term_hook(void)
 
 }
 
-void
-port_initialize(void) {
-	/* LED Enable */
-	PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 15;
-
-	/* LED On */
-	PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 15;
-
-	/* for SEMCOM2  */
-	PORT_REGS->GROUP[1].PORT_PINCFG[26] = 0x1;
-	PORT_REGS->GROUP[1].PORT_PINCFG[27] = 0x41;
-	PORT_REGS->GROUP[1].PORT_PMUX[13] = 0x22;
-}
-
-void
-led_on(void)
-{
-	PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 15;
-}
-
-void
-led_off(void)
-{
-	PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 15;
-}
-
 /*
  *  ターゲット依存の初期化
  */
 void
 target_initialize(void)
 {
-	/*
-	 *  -fdata-sectionsを使用するとistkが削除され，
-	 *  cfgのパス3のチェックがエラーとなるため，
-	 *  削除されないようにする 
-	 */
-	poi = (uint32_t)istk;
-	poi = (uint32_t)vector_table[2];
-
 	/*
 	 *  ARM依存の初期化
 	 */

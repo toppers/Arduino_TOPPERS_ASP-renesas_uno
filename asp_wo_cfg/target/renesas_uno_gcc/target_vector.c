@@ -39,7 +39,7 @@
  */
 
 /*
- * チップ依存ベクターテーブル（SAMD51用）
+ * チップ依存ベクターテーブル（RENESAS_UNO用）
  */
 #include "kernel_impl.h"
 
@@ -117,92 +117,4 @@ const  FP _kernel_vector_table[] =
 	(FP)(core_int_entry), /* 64 */
 	(FP)(core_int_entry), /* 65 */
 	(FP)(core_int_entry), /* 66 */
-	(FP)(core_int_entry), /* 67 */
-	(FP)(core_int_entry), /* 68 */
-	(FP)(core_int_entry), /* 69 */
-	(FP)(core_int_entry), /* 70 */
-	(FP)(core_int_entry), /* 71 */
-	(FP)(core_int_entry), /* 72 */
-	(FP)(core_int_entry), /* 73 */
-	(FP)(core_int_entry), /* 74 */
-	(FP)(core_int_entry), /* 75 */
-	(FP)(core_int_entry), /* 76 */
-	(FP)(core_int_entry), /* 77 */
-	(FP)(core_int_entry), /* 78 */
-	(FP)(core_int_entry), /* 79 */
-	(FP)(core_int_entry), /* 80 */
-	(FP)(core_int_entry), /* 81 */
-	(FP)(core_int_entry), /* 82 */
-	(FP)(core_int_entry), /* 83 */
-	(FP)(core_int_entry), /* 84 */
-	(FP)(core_int_entry), /* 85 */
-	(FP)(core_int_entry), /* 86 */
-	(FP)(core_int_entry), /* 87 */
-	(FP)(core_int_entry), /* 88 */
-	(FP)(core_int_entry), /* 89 */
-	(FP)(core_int_entry), /* 90 */
-	(FP)(core_int_entry), /* 91 */
-	(FP)(core_int_entry), /* 92 */
-	(FP)(core_int_entry), /* 93 */
-	(FP)(core_int_entry), /* 94 */
-	(FP)(core_int_entry), /* 95 */
-	(FP)(core_int_entry), /* 96 */
-	(FP)(core_int_entry), /* 97 */
-	(FP)(core_int_entry), /* 98 */
-	(FP)(core_int_entry), /* 99 */
-	(FP)(core_int_entry), /* 100 */
-	(FP)(core_int_entry), /* 101 */
-	(FP)(core_int_entry), /* 102 */
-	(FP)(core_int_entry), /* 103 */
-	(FP)(core_int_entry), /* 104 */
-	(FP)(core_int_entry), /* 105 */
-	(FP)(core_int_entry), /* 106 */
-	(FP)(core_int_entry), /* 107 */
-	(FP)(core_int_entry), /* 108 */
-	(FP)(core_int_entry), /* 109 */
-	(FP)(core_int_entry), /* 110 */
-	(FP)(core_int_entry), /* 111 */
-	(FP)(core_int_entry), /* 112 */
-	(FP)(core_int_entry), /* 113 */
-	(FP)(core_int_entry), /* 114 */
-	(FP)(core_int_entry), /* 115 */
-	(FP)(core_int_entry), /* 116 */
-	(FP)(core_int_entry), /* 117 */
-	(FP)(core_int_entry), /* 118 */
-	(FP)(core_int_entry), /* 119 */
-	(FP)(core_int_entry), /* 120 */
-	(FP)(core_int_entry), /* 121 */
-	(FP)(core_int_entry), /* 122 */
-	(FP)(core_int_entry), /* 123 */
-	(FP)(core_int_entry), /* 124 */
-	(FP)(core_int_entry), /* 125 */
-	(FP)(core_int_entry), /* 126 */
-	(FP)(core_int_entry), /* 127 */
-	(FP)(core_int_entry), /* 128 */
-	(FP)(core_int_entry), /* 129 */
-	(FP)(core_int_entry), /* 130 */
-	(FP)(core_int_entry), /* 131 */
-	(FP)(core_int_entry), /* 132 */
-	(FP)(core_int_entry), /* 133 */
-	(FP)(core_int_entry), /* 134 */
-	(FP)(core_int_entry), /* 135 */
-	(FP)(core_int_entry), /* 136 */
-	(FP)(core_int_entry), /* 137 */
-	(FP)(core_int_entry), /* 138 */
-	(FP)(core_int_entry), /* 139 */
-	(FP)(core_int_entry), /* 140 */
-	(FP)(core_int_entry), /* 141 */
-	(FP)(core_int_entry), /* 142 */
-	(FP)(core_int_entry), /* 143 */
-	(FP)(core_int_entry), /* 144 */
-	(FP)(core_int_entry), /* 145 */
-	(FP)(core_int_entry), /* 146 */
-	(FP)(core_int_entry), /* 147 */
-	(FP)(core_int_entry), /* 148 */
-	(FP)(core_int_entry), /* 149 */
-	(FP)(core_int_entry), /* 150 */
-	(FP)(core_int_entry), /* 151 */
-	(FP)(core_int_entry), /* 152 */
-	(FP)(core_int_entry), /* 153 */
-	(FP)(core_int_entry), /* 154 */
 };

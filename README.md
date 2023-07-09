@@ -1,10 +1,8 @@
-# TOPPERS/ASP Arduino ライブラリ（TA2LIB）
+# TOPPERS/ASP Arduino UNO R4 ライブラリ（TA2LIB）
 
 ## 本ライブラリについて
 
-本ライブラリは，[TOPPERS/ASPカーネル](https://www.toppers.jp/asp-kernel.html)（以下，ASPカーネル）を Wio Terminal/Seeeduino Xiao で動作させる Arduino IDE 用のライブラリである．
-
-[Seeed_Arduino_FreeRTOS](https://github.com/Seeed-Studio/Seeed_Arduino_FreeRTOS)にインスパイアされて開発した．
+本ライブラリは，[TOPPERS/ASPカーネル](https://www.toppers.jp/asp-kernel.html)（以下，ASPカーネル）を Arduino UNO R4 で動作させる Arduino IDE 用のライブラリである．
 
 ## 特徴
 
@@ -18,6 +16,8 @@
  - オブジェクトは初期化関数で実行時に生成する．
   -  [asp_wo_cfg](https://dev.toppers.jp/trac_user/contrib/browser/asp_wo_cfg/)をベースとしている．
 
+- syslog()は未サポート．
+
 ## R2CAとの違い
 
 - [R2CA](https://dev.toppers.jp/trac_user/contrib/wiki/rtos_arduino)は，ArduinoライブラリをASPカーネルでビルドすることを目的としている．
@@ -25,38 +25,20 @@
 
 ## 動作確認バージョン
 
-- Arduino IDE : 1.8.13 
+- Arduino IDE : 2.1.1
 	- プリコンパイル済のライブラリを使用するため，1.8.6以上が必要．
-- Seeed SAMD Boards : 1.8.0
+- Ardino UNO R4 Boards : 1.0.1
 
 
 ## 使用方法
 
-### 機材の準備（WioTerminal）
+### Arduino UNO R4 用の環境の準備
 
-SERCOM2にシリアルコンソールを使用する場合は，背面の以下のピンに USB UART を接続する．
+[このページ](https://docs.arduino.cc/tutorials/uno-r4-minima/minima-getting-started)を参考に Arduino UNO R4用の環境を用意する．
 
-| 端子番号 | 機能 |
-----|---- 
-|  6 | GND | 
-|  8 | TXD | 
-| 10 | RXD | 
+### ライブラリのダウンロードとインストール
 
-### 機材の準備（Seeeduino Xiao）
-
-| 端子番号 | 機能 |
-----|---- 
-|  6 | TXD | 
-|  7 | RXD | 
-
-
-### Wio Terminal/Seeeduio Xiao用の環境の準備
-
-[このページ](https://wiki.seeedstudio.com/jp/Wio-Terminal-Getting-Started/)を参考にWio Terminal用の環境を用意する．
-
-### ライブラリのダウンロード
-
-[リリース]()のページからリリースパッケージ(zipファイル)をダウンロードして，ArduinoIDEの
+GitHubからZipファイルをダウンロードして，ファイル名の最後の-master を削除して，ArduinoIDEの
 
 ```
  スケッチ -> ライブラリをインクルード -> .ZIP形式のライブラリをインストール
@@ -66,25 +48,25 @@ SERCOM2にシリアルコンソールを使用する場合は，背面の以下�
 
 Arduino IDE を再起動する．
 
+もしくは，Arduino ライブラリフォルダへcloneする．
 
 ### サンプルのビルド
 
 - サンプルのプロジェクトを選択する．
 
 ```
- ファイル -> スケッチの例 -> ToppersASP -> ToppersASP_Blink 
+ ファイル -> スケッチの例 -> ToppersASP-renesas_uno -> ToppersASP_Blink 
 ```
 
-- Wio TerminalのUSB端子とPCを接続する．
+- Arduino UNO R4のUSB端子とPCを接続する．
 
 - マイコンボードに書き込むを選択して書き込む．
 
 - ターミナルエミュレータを接続
-	- Wio TerminalのUSB端子によるCOMポート
-	- USB UARTによるCOMポート(オプション)
+	- USB端子によるCOMポートに接続．
 
 - 実行
-	- Wio TerminalのUSB端子によるCOMポート にターミナルエミュレータを接続すると実行が開始される．
+	- USB端子によるCOMポート にターミナルエミュレータを接続すると実行が開始される．
 
 
 ## 使用方法
@@ -93,7 +75,7 @@ Arduino IDE を再起動する．
 
 setup()では，以下の内容を記載する．
 
-- USBUartの初期化(オプション)
+- SerialUSBの初期化
 	- 必ず以下の順序で記載する．
 - その他の初期化(オプション)
 	- ポートの初期化等を記載する．
@@ -102,9 +84,7 @@ setup()では，以下の内容を記載する．
 
 ```
 void setup() {
-  //USBUartの初期化(オプション)
   SerialUSB.begin(115200);
-  ToppersASPDelayMs(1000);
   while (!SerialUSB);
 
   //その他の初期化(オプション)
@@ -177,9 +157,10 @@ void
 task1(intptr_t exinf)
 {
   int count = 0;
-  while(1){
-    syslog(LOG_NOTICE, "task1 is running. %d", count++);
-    dly_tsk(1000);
+  while(1){    
+	SerialUSB.print("task1 is running. ");
+    SerialUSB.println(count++);
+    delay(1000);
   }
 }
 ```
@@ -202,9 +183,6 @@ loop()関数はASPカーネルの最低優先度のタスクとして実行さ�
   
 - SysTick
 	- カーネル内部のティックの生成に用いる．
-     
-- SERCOM2
-	- コンソールの出力に使用．
 
 ## Tips
 
@@ -220,8 +198,3 @@ Arduino IDEから書き込めない場合は，Wio Terminalの電源スイッチ
 	- ASPカーネル本体
 - doc
 	- 各種ドキュメント．
-- standalone
-	- WioTerminalのスタンドアローン実行のためのフォルダ．
-- standalone
-    - Seeduio Xioaのスタンドアローン実行のためのフォルダ．
-

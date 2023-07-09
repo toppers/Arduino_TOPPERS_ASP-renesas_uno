@@ -45,11 +45,6 @@
 #include <t_syslog.h>
 #include "target_serial.h"
 
-#define SCI2_BASE 0x40070040
-
-#define INTNO_SIO_TX
-#define INTNO_SIO_RX
-
 /*
  *  割込み
  */

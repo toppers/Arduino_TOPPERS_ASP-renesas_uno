@@ -372,7 +372,7 @@
 #ifndef ARDUINO_PASS
 #include "target_rename.h"
 #else /* ARDUINO_PASS */
-#include "../asp_wo_cfg/target/samd51_gcc/target_rename.h"
+#include "../asp_wo_cfg/target/renesas_uno_gcc/target_rename.h"
 #endif /* ARDUINO_PASS */
 
 #endif /* TOPPERS_KERNEL_RENAME_H */

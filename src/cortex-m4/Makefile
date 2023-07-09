@@ -142,7 +142,7 @@ endif
 ifndef OMIT_OPTIMIZATION
   COPTS := $(COPTS) -O2
 endif
-CDEFS := $(CDEFS) -DARDUINO
+CDEFS := $(CDEFS) -DARDUINO -DTOPPERS_OMIT_SYSLOG 
 INCLUDES := -I. -I$(SRCDIR)/include -I$(SRCDIR)/arch -I$(SRCDIR) $(INCLUDES) -I..
 LDFLAGS := $(LDFLAGS) 
 LIBS := $(LIBS) $(CXXLIBS)
@@ -332,9 +332,14 @@ offset.h: makeoffset.s $(SRCDIR)/utils/genoffset
 #
 #  カーネルライブラリファイルの生成
 #
-libkernel.a: $(OFFSET_H) $(KERNEL_LIB_OBJS) $(SYSSVC_OBJS) $(APPL_COBJS)
+#libkernel.a: $(OFFSET_H) $(KERNEL_LIB_OBJS) $(SYSSVC_OBJS) $(APPL_COBJS)
+#	-rm -f libkernel.a
+#	$(AR) -rcs libkernel.a $(KERNEL_LIB_OBJS) $(SYSSVC_OBJS) $(APPL_COBJS)
+#	$(RANLIB) libkernel.a
+
+libkernel.a: $(OFFSET_H) $(KERNEL_LIB_OBJS)
 	-rm -f libkernel.a
-	$(AR) -rcs libkernel.a $(KERNEL_LIB_OBJS) $(SYSSVC_OBJS) $(APPL_COBJS)
+	$(AR) -rcs libkernel.a $(KERNEL_LIB_OBJS)
 	$(RANLIB) libkernel.a
 
 #

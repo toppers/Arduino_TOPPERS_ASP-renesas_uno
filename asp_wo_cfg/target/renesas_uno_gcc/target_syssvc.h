@@ -59,7 +59,7 @@
 /*
  *  起動メッセージのターゲットシステム名
  */
-#define TARGET_NAME		"SAMD51(Cortex-M4)"
+#define TARGET_NAME		"RENESAS_UNO(Cortex-M4)"
 
 /*
  *  システムログの低レベル出力のための文字出力
