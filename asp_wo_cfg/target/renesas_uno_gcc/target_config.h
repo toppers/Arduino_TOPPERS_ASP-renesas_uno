@@ -63,7 +63,7 @@
 /*
  *  デフォルトの非タスクコンテキスト用のスタック領域の定義
  */
-#define DEFAULT_ISTKSZ			(1024 * 4)
+#define DEFAULT_ISTKSZ			(1024 * 2)
 
 /*
  * スタートアップルーチンでスタックを初期化する
@@ -85,8 +85,8 @@
 /*
  *  割込み要求ライン属性，割込みハンドラ，CPU例外ハンドラの登録可能数
  */
-#define TNUM_INTNO			(16 + 138)
-#define TNUM_INHNO			(16 + 138)
+#define TNUM_INTNO			(16 + 32)
+#define TNUM_INHNO			(16 + 32)
 #define TNUM_EXCNO			14
 
 #define INDEX_INTNO(intno)	((uint_t)((intno) - 1))

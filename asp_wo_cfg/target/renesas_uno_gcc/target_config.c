@@ -125,7 +125,7 @@ void
 target_fput_log(char c)
 {
 	if (c == '\n') {
-		sercom_putc(SIO_PORTID, '\r');
+//		sercom_putc(SIO_PORTID, '\r');
 	}
-	sercom_putc(SIO_PORTID, c);
+//	sercom_putc(SIO_PORTID, c);
 }
