@@ -1,11 +1,15 @@
 #include <ToppersASP-renesas_uno.h>
 
+#ifdef ARDUINO_UNOR4_MINIMA
+#define Serial SerialUSB 
+#endif /* ARDUINO_UNOWIFIR4 */
+
 #define BUTTON_PIN  2
 
 // the setup function runs once when you press reset or power the board
 void setup() {
-  SerialUSB.begin(115200);
-  while (!SerialUSB)
+  Serial.begin(9600);
+  while (!Serial)
     ;
 
   // initialize digital pin LED_BUILTIN as an output.
@@ -25,8 +29,8 @@ void button_handler(void) {
 void task1(intptr_t exinf) {
   int count = 0;
   while (1) {
-    SerialUSB.print("task1 is running. ");
-    SerialUSB.println(count++);
+    Serial.print("task1 is running. ");
+    Serial.println(count++);
     delay(1000);  // wait for a second
   }
 }
@@ -34,8 +38,8 @@ void task1(intptr_t exinf) {
 void task2(intptr_t exinf) {
   int count = 0;
   while (1) {
-    SerialUSB.print("task2 is running. ");
-    SerialUSB.println(count++);
+    Serial.print("task2 is running. ");
+    Serial.println(count++);
     slp_tsk();
   }
 }
@@ -52,15 +56,15 @@ void user_inirtn(void) {
   ctsk.stk = NULL;
   ercd = cre_tsk(TASK1, &ctsk);
   if (ercd != E_OK) {
-    SerialUSB.print("cre_tsk(TASK1) error! ercd = ");
-    SerialUSB.println(ercd);
+    Serial.print("cre_tsk(TASK1) error! ercd = ");
+    Serial.println(ercd);
   }
 
   ctsk.task = task2;
   ercd = cre_tsk(TASK2, &ctsk);
   if (ercd != E_OK) {
-    SerialUSB.print("cre_tsk(TASK2) error! ercd = ");
-    SerialUSB.println(ercd);
+    Serial.print("cre_tsk(TASK2) error! ercd = ");
+    Serial.println(ercd);
   }
 }
 
@@ -68,8 +72,8 @@ int loop_count;
 
 // the loop function runs over and over again forever
 void loop() {
-  SerialUSB.print("loop: ");
-  SerialUSB.println(loop_count++);
+  Serial.print("loop: ");
+  Serial.println(loop_count++);
   digitalWrite(LED_BUILTIN, HIGH);  // turn the LED on (HIGH is the voltage level)
   delay(1000);                      // wait for a second
   digitalWrite(LED_BUILTIN, LOW);   // turn the LED off by making the voltage LOW
