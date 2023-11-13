@@ -18,16 +18,12 @@
 
 - syslog()は未サポート．
 
-## R2CAとの違い
-
-- [R2CA](https://dev.toppers.jp/trac_user/contrib/wiki/rtos_arduino)は，ArduinoライブラリをASPカーネルでビルドすることを目的としている．
-  一方，本ライブラリは Arduino IDE でASPカーネルの機能を使用することを目的としています．
 
 ## 動作確認バージョン
 
-- Arduino IDE : 2.1.1
+- Arduino IDE : 2.2.1
 	- プリコンパイル済のライブラリを使用するため，1.8.6以上が必要．
-- Ardino UNO R4 Boards : 1.0.1
+- Ardino UNO R4 Boards : 1.0.5
 
 
 ## 使用方法
