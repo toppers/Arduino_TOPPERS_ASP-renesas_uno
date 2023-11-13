@@ -181,8 +181,31 @@ loop()関数はASPカーネルの最低優先度のタスクとして実行さ�
 	- カーネル内部のティックの生成に用いる．
 
 ## Tips
+- Arduino IDEから書き込めない場合
+	- リセットスイッチを押した後にIDEにより書き込みすることで解決する場合がある．
+- メモリ使用量のカスタマイズ
+	- 	./src/kernel_cfg.h にある定義内容を変更する．
 
-Arduino IDEから書き込めない場合は，Wio Terminalの電源スイッチを下に素早く2回スライドすることによりブートローダが起動して書き込み可能となる．
+```
+/*
+ *  各カーネルオブジェクトの最大登録数
+ */
+#define TNUM_TSKID	10		/* タスクの数 */
+#define TNUM_SEMID	10		/* セマフォの数 */
+#define TNUM_FLGID	10		/* イベントフラグ */
+#define TNUM_DTQID	10		/* データキュー */
+#define TNUM_PDQID	10		/* 優先度データキュー */
+#define TNUM_MBXID	10		/* メールボックス */
+#define TNUM_MPFID	10		/* 固定長メモリプール */
+#define TNUM_CYCID	10		/* 周期ハンドラ */
+#define TNUM_ALMID	10		/* アラームハンドラ */
+#define TNUM_ISRID	10		/* 割込みサービスルーチン */
+
+/*
+ *  カーネルが割り付けるメモリ領域のサイズ
+ */
+#define	KMM_SIZE	(1024 * 8)
+```
 
 ## フォルダ構成
 
