@@ -1,11 +1,11 @@
 # JTAGICEを用いたデバッグ方法について
 
 ## このドキュメントについて
-TOPPERS/ASP Arduino ライブラリを用いたアプリケーションをJTAG-ICEを用い
+TOPPERS/ASP Arduino UNO R4 ライブラリを用いたアプリケーションをJTAG-ICEを用い
 てデバッグする方法についてまとめたものである．
 
 ## 動作確認済みデバッガ
-- Segger J-Link
+- [Segger J-Link](https://www.mouser.jp/ProductDetail/Segger-Microcontroller/80891?qs=gt1LBUVyoHmQKgW9PvZ%2FwQ%3D%3D&mgh=1&vip=1&gad_source=1&gclid=EAIaIQobChMI6bzEsKrCggMVPdEWBR3X2QOsEAQYBCABEgICXvD_BwE)
 
 ## デバッガの接続
 ボード上のSWD端子に接続する．ONという名前のLEDがある側がGND．

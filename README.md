@@ -8,23 +8,24 @@
 
 - Arduino 環境でマルチタスクプログラミングが可能．
 - Arduino IDEでビルド可能
-- Arduino の各種ライブラリを使用可能．
+- Arduino の各種ライブラリと併用可能．
 
 ## オリジナルのASPカーネルとの違い
 
 - 静的APIをサポートしていない
- - オブジェクトは初期化関数で実行時に生成する．
-  -  [asp_wo_cfg](https://dev.toppers.jp/trac_user/contrib/browser/asp_wo_cfg/)をベースとしている．
-
+	- オブジェクトは初期化関数で実行時に生成する．
+	-  [asp_wo_cfg](https://dev.toppers.jp/trac_user/contrib/browser/asp_wo_cfg/)をベースとしている．
 - syslog()は未サポート．
 
 
 ## 動作確認バージョン
 
 - Arduino IDE : 2.2.1
-	- プリコンパイル済のライブラリを使用するため，1.8.6以上が必要．
 - Ardino UNO R4 Boards : 1.0.5
 
+## 動作確認ハードウエア
+- [Arduinno UNO R4 MINIMA](https://store.arduino.cc/products/uno-r4-minima)
+- [Arduinno UNO R4 WIFI](https://store.arduino.cc/products/uno-r4-wifi)
 
 ## 使用方法
 
@@ -32,9 +33,11 @@
 
 [このページ](https://docs.arduino.cc/tutorials/uno-r4-minima/minima-getting-started)を参考に Arduino UNO R4用の環境を用意する．
 
-### ライブラリのダウンロードとインストール
+### ライブラリのインストール
 
-GitHubからZipファイルをダウンロードして，ファイル名の最後の-master を削除して，ArduinoIDEの
+#### ZIPファイルによるインストール
+
+GitHubからリリースファイルをダウンロードして，ArduinoIDEの
 
 ```
  スケッチ -> ライブラリをインクルード -> .ZIP形式のライブラリをインストール
@@ -44,10 +47,45 @@ GitHubからZipファイルをダウンロードして，ファイル名の最�
 
 Arduino IDE を再起動する．
 
-もしくは，Arduino ライブラリフォルダへcloneする．
+
+#### gitによるインストール
+
+Arduino ライブラリフォルダへcloneして，Arduino IDE を再起動する．
+
+### サンプル
+Arduinno UNO R4 MINIMA と Arduinno UNO R4 WIFI でサンプルが異なる．
+
+- Arduinno UNO R4 MINIMA 用
+	- ToppersASP_Blink
+		- タスクを2個作成
+			- task1/task2 : 1秒毎にログを出力
+		- メインループ（タスク）
+			- LEDを1秒間隔でON/OFF
+
+	- ToppersASP_Button
+		- タスクを2個作成
+			- task1 : 1秒毎にログを出力
+			- task2 : Pin2に接続したボタンを押すと起床されてログを出力
+		- メインループ（タスク）
+			- LEDを1秒間隔でON/OFF
+
+- Arduinno UNO R4 WIFI 用
+	- ToppersASP_LEDMatrix
+		- タスクを2個作成
+			- task1/task2 : 1秒毎にログを出力
+		- メインループ（タスク）
+			- LED Matrixに文字列を表示する
+
+	- ToppersASP_WebServer
+		- タスクを2個作成
+			- task1 : 1秒毎にログを出力
+			- task2 : Pin2に接続したボタンを押すと起床されてログを出力
+		- メインループ（タスク）
+			- Webサーバーを動作させる
+
 
 ### サンプルのビルド
-
+- ToppersASP_Blink を例に説明する．
 - サンプルのプロジェクトを選択する．
 
 ```
@@ -71,8 +109,12 @@ Arduino IDE を再起動する．
 
 setup()では，以下の内容を記載する．
 
-- SerialUSBの初期化
-	- 必ず以下の順序で記載する．
+- Serialの初期化(オプシション)
+	- MINIMAの場合
+		- SerialUSBを使用する．
+		- 必ず以下の順序で記載する．
+	- WIFIの場合
+		- Serialを使用する．
 - その他の初期化(オプション)
 	- ポートの初期化等を記載する．
 - カーネルの起動
@@ -80,6 +122,7 @@ setup()では，以下の内容を記載する．
 
 ```
 void setup() {
+  //MINIMAの場合	
   SerialUSB.begin(115200);
   while (!SerialUSB);
 
@@ -110,7 +153,7 @@ void setup() {
 	ER	def_exc(EXCNO excno, const T_DEXC *pk_dexc);
 ```
 
-各オブジェクトのIDは次の値を使用する．nは1～10を指定可能．10個以上のオブジェクトを使用したい場合は，./doc/customize.txt を参考のこと．
+各オブジェクトのIDは次の値を使用する．nは1～10を指定可能．10個以上のオブジェクトを使用したい場合は，[customize.md](doc/customize.md) を参考のこと．
 
 | オブジェクト | マクロ |
 ----|---- 
@@ -180,32 +223,12 @@ loop()関数はASPカーネルの最低優先度のタスクとして実行さ�
 - SysTick
 	- カーネル内部のティックの生成に用いる．
 
+## デバッグ
+MINIMAはJTAG-ICEによるデバッグが可能である．詳細は[debug.md](doc/debug.md) を参考のこと．
+
 ## Tips
 - Arduino IDEから書き込めない場合
 	- リセットスイッチを押した後にIDEにより書き込みすることで解決する場合がある．
-- メモリ使用量のカスタマイズ
-	- 	./src/kernel_cfg.h にある定義内容を変更する．
-
-```
-/*
- *  各カーネルオブジェクトの最大登録数
- */
-#define TNUM_TSKID	10		/* タスクの数 */
-#define TNUM_SEMID	10		/* セマフォの数 */
-#define TNUM_FLGID	10		/* イベントフラグ */
-#define TNUM_DTQID	10		/* データキュー */
-#define TNUM_PDQID	10		/* 優先度データキュー */
-#define TNUM_MBXID	10		/* メールボックス */
-#define TNUM_MPFID	10		/* 固定長メモリプール */
-#define TNUM_CYCID	10		/* 周期ハンドラ */
-#define TNUM_ALMID	10		/* アラームハンドラ */
-#define TNUM_ISRID	10		/* 割込みサービスルーチン */
-
-/*
- *  カーネルが割り付けるメモリ領域のサイズ
- */
-#define	KMM_SIZE	(1024 * 8)
-```
 
 ## フォルダ構成
 
@@ -217,3 +240,5 @@ loop()関数はASPカーネルの最低優先度のタスクとして実行さ�
 	- ASPカーネル本体
 - doc
 	- 各種ドキュメント．
+
+以上．
